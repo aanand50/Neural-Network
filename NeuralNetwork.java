@@ -1,12 +1,15 @@
+import java.util.Random;
+
 public class NeuralNetwork {
     private Layer[] layers;
     private Function activationFunction;
+    private Random random = new Random();
 
     public NeuralNetwork(int[] layerSizes, Function activationFunction) {
         this.activationFunction = activationFunction;
         layers = new Layer[layerSizes.length];
         for (int i = 0; i < layers.length; i++) {
-            layers[i] = new Layer(layerSizes[i]);
+            layers[i] = new Layer(layerSizes[i], random);
         }
     }
 

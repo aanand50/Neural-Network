@@ -1,19 +1,33 @@
+import java.util.Random;
+
 public class Layer {
     private Node[] nodes;
 
-    public Layer(int size) {
+    public Layer(int size, Random random) {
         nodes = new Node[size];
         for (int i = 0; i < size; i++) {
-            nodes[i] = new Node();
+            nodes[i] = new Node(size, random);
         }
     }
 
     protected Layer(double[] inputs) {
-        //TODO make dummy layer
+        nodes = new Node[inputs.length];
+        for (int i = 0; i < inputs.length; i++) {
+            nodes[i] = new Node(inputs.length);
+            nodes[i].output = inputs[i];
+        }
     }
 
     public void feedForward(Function activationFunction, Layer previousLayer) {
-        //TODO
+        for (Node node : nodes) {
+            double sum = 0;
+            for (int i = 0; i < previousLayer.nodes.length; i++) {
+                sum += previousLayer.nodes[i].output * node.weights[i];
+            }
+            sum += node.bias;
+            node.z = sum;
+            node.output = activationFunction.get(sum);
+        }
     }
 
     public void backProp(Function activationFunction, Layer nextLayer) {
