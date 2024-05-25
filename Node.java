@@ -1,12 +1,13 @@
 import java.util.Random;
 
 public class Node {
-    protected double output;
     protected double z;
-    protected double[] weights;
+    protected double a;
     protected double bias;
+    protected double[] weights;
+    protected double inputError;
+    protected double outputError;
     protected double[] weightErrors;
-    protected double biasError;
 
     protected Node(int numInputs) {
         weights = new double[numInputs];
@@ -19,6 +20,5 @@ public class Node {
         for (int i = 0; i < numInputs; i++) {
             weights[i] = random.nextDouble() * 2 - 1;
         }
-        bias = random.nextDouble() * 2 - 1;
     }
 }

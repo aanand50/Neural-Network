@@ -8,8 +8,10 @@ public class NeuralNetwork {
     public NeuralNetwork(int[] layerSizes, Function activationFunction) {
         this.activationFunction = activationFunction;
         layers = new Layer[layerSizes.length];
+        int numInputs = 0;
         for (int i = 0; i < layers.length; i++) {
-            layers[i] = new Layer(layerSizes[i], random);
+            layers[i] = new Layer(layerSizes[i], numInputs, random);
+            numInputs = layerSizes[i];
         }
     }
 
@@ -21,15 +23,20 @@ public class NeuralNetwork {
         }
     }
 
-    public void backProp(double[] targets) {
-        double[] outputs = layers[layers.length - 1].getOutputs();
-        double[] error = new double[outputs.length];
-        for (int i = 0; i < outputs.length; i++) {
-            error[i] = targets[i] - outputs[i];
+    public void backProp(double[] targets, double learningRate) {
+        Layer outputLayer = layers[layers.length - 1];
+        outputLayer.setErrors(targets);
+
+        for (int l = layers.length - 1; l > 0; l--) {
+            Layer layer = layers[l];
+            Layer previousLayer = layers[l - 1];
+            layer.backProp(activationFunction, previousLayer, l == 1);
         }
-        Layer nextLayer = new Layer(error);
-        for (int i = layers.length - 1; i >= 0; i--) {
-            layers[i].backProp(activationFunction, nextLayer);
+
+        for (int l = 1; l < layers.length; l++) {
+            Layer layer = layers[l];
+            Layer previousLayer = layers[l - 1];
+            layer.updateWeights(learningRate, previousLayer);
         }
     }
 }
