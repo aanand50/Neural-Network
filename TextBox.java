@@ -17,7 +17,7 @@ public class TextBox {
         parent.fill(255);
         parent.rect(x, y, w, h);
         parent.fill(0);
-        textAlign(LEFT, CENTER);// TODO find out what these numbers are
+        parent.textAlign(PApplet.LEFT, PApplet.CENTER);
         parent.text(text, x + 5, y + h / 2);
     }
 
@@ -33,5 +33,9 @@ public class TextBox {
 
     public String getText() {
         return text;
+    }
+
+    public boolean isActive() {
+        return true;
     }
 }

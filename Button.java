@@ -18,7 +18,7 @@ public class Button {
         parent.fill(200);
         parent.rect(x, y, w, h);
         parent.fill(0);
-        parent.textAlign(CENTER, CENTER);// TODO find out what these numbers are
+        parent.textAlign(PApplet.CENTER, PApplet.CENTER);
         parent.text(label, x + w / 2, y + h / 2);
     }
 
