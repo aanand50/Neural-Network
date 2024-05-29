@@ -31,7 +31,6 @@ public class Main extends PApplet {
     }
 
     public void setup() {
-        size(800, 600);
         // activationFunction=
         // nn
         feedForwardButton = new Button("Feed Forward", 50, 500, 100, 30, this);
