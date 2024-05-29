@@ -39,4 +39,8 @@ public class NeuralNetwork {
             layer.updateWeights(learningRate, previousLayer);
         }
     }
+
+    public double[] getOutput() {
+        return layers[layers.length - 1].getOutputs();
+    }
 }
