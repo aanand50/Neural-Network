@@ -22,7 +22,7 @@ public class Button {
         parent.text(label, x + w / 2, y + h / 2);
     }
 
-    public boolean isClicked(int mx, int my) {
-        return mx > x && mx < x + w && my > y && my < y + h;
+    public boolean isClicked() {
+        return parent.mouseX > x && parent.mouseX < x + w && parent.mouseY > y && parent.mouseY < y + h;
     }
 }

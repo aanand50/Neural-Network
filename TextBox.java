@@ -2,6 +2,7 @@ import processing.core.*;
 
 public class TextBox {
     private int x, y, w, h;
+    private boolean isActive;
     private String text = "";
     private PApplet parent;
 
@@ -14,11 +15,23 @@ public class TextBox {
     }
 
     public void display() {
-        parent.fill(255);
+        if (isActive()) {
+            parent.fill(200);
+        }
+        else {
+            parent.fill(255);
+        }
         parent.rect(x, y, w, h);
         parent.fill(0);
         parent.textAlign(PApplet.LEFT, PApplet.CENTER);
         parent.text(text, x + 5, y + h / 2);
+         
+    }
+    
+    public void update() {
+        if (parent.mousePressed) {
+            isActive = parent.mouseX > x && parent.mouseX < x + w && parent.mouseY > y && parent.mouseY < y + h;
+        }
     }
 
     public void appendText(char c) {
@@ -36,6 +49,6 @@ public class TextBox {
     }
 
     public boolean isActive() {
-        return true;
+        return isActive;
     }
 }
