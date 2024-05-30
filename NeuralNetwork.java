@@ -16,10 +16,11 @@ public class NeuralNetwork {
     }
 
     public void feedForward(double[] inputs) {
-        Layer previousLayer = new Layer(inputs);
-        for (Layer layer : layers) {
-            layer.feedForward(activationFunction, previousLayer);
-            previousLayer = layer;
+        Layer previousLayer = layers[0];
+        previousLayer.setInputs(inputs);
+        for (int i = 1; i < layers.length; i++) {
+            layers[i].feedForward(activationFunction, previousLayer);
+            previousLayer = layers[i];
         }
     }
 
@@ -42,5 +43,22 @@ public class NeuralNetwork {
 
     public double[] getOutput() {
         return layers[layers.length - 1].getOutputs();
+    }
+    
+    public String toString() {
+        String layerInfo = "";
+        for (int i = 0; i < layers.length; i++) {
+            if (i == 0) {
+                layerInfo += "Input Layer: ";
+            }
+            else if (i == layers.length - 1) {
+                layerInfo += "Output Layer: ";
+            }
+            else {
+                layerInfo += "Hidden Layer: ";
+            }
+            layerInfo += layers[i].toString() + "\n";
+        }
+        return layerInfo;
     }
 }

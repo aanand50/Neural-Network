@@ -50,9 +50,8 @@ public class Main extends PApplet {
         numTotal++;
 
         textSize(50);
-        text(numRight / numTotal, width/2, height/2);
+        text(numRight / numTotal, width / 2, height / 2);
         
-
         nn.backProp(new double[] {output}, learningRate);
 
         // Draw neural network visualization
@@ -65,6 +64,7 @@ public class Main extends PApplet {
         backPropButton = new Button("Back Propagate", 200, 50, 120, 30, this);
         inputBox = new TextBox(50, 100, 100, 30, this);
         targetBox = new TextBox(200, 100, 100, 30, this);
+        System.out.println(nn.toString());
     }
 
     public void keyPressed() {
