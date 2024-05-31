@@ -7,9 +7,11 @@ public class Main extends PApplet {
     private Button backPropButton;
     private TextBox inputBox;
     private TextBox targetBox;
-    private double learningRate = 0.1;
+    private double learningRate = 0.03;
     private int numRight;
     private int numTotal;
+    private int tempRight;
+    private int tempTotal;
 
     public static void main(String[] args) {
         PApplet.runSketch(new String[] { "Main" }, new Main());
@@ -46,20 +48,29 @@ public class Main extends PApplet {
 
         if (nn.getOutput()[0] > 0 == output > 0) {
             numRight++;
+            tempRight++;
         }
         numTotal++;
+        tempTotal++;
 
         textSize(50);
-        text(numRight / numTotal, width / 2, height / 2);
+        text("" + (double) numRight / numTotal, width / 2, height / 2 - 100);
+        text("" + (double) tempRight / tempTotal, width / 2, height / 2);
+        textSize(15);
         
         nn.backProp(new double[] {output}, learningRate);
 
+        if (tempTotal == 250) {
+            tempTotal = 0;
+            tempRight = 0;
+        }
+        
         // Draw neural network visualization
         // drawNeuralNetwork();
     }
 
     public void setup() {
-        nn = new NeuralNetwork(new int[] {2, 5, 1}, Function.SIGMOID);
+        nn = new NeuralNetwork(new int[] {2, 5, 1}, Function.TANH);
         feedForwardButton = new Button("Feed Forward", 50, 50, 100, 30, this);
         backPropButton = new Button("Back Propagate", 200, 50, 120, 30, this);
         inputBox = new TextBox(50, 100, 100, 30, this);
