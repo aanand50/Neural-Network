@@ -32,37 +32,11 @@ public class Main extends PApplet {
         inputBox.update();
         targetBox.update();
 
-        double x = Math.random() * 2 - 1;
-        double y = Math.random() * 2 - 1;
-
-        double output = 0;
-
-        nn.feedForward(new double[] { x, y });
-        if (x > 0 == y > 0) {
-            output = 1;
-        } else {
-            output = -1;
-        }
-
-        if (nn.getOutput()[0] > 0 == output > 0) {
-            numRight++;
-            tempRight++;
-        }
-        numTotal++;
-        tempTotal++;
-
         textSize(50);
         text("Overall percentage: " + percentage(numRight, numTotal) + "%", width / 2, height / 2 - 100);
         text("Runnimg percentage: " + percentage(tempRight, tempTotal) + "%", width / 2, height / 2);
         text("Total: " + numTotal, width / 2, height / 2 - 200);
         textSize(15);
-
-        nn.backProp(new double[] { output }, learningRate);
-
-        if (tempTotal == 250) {
-            tempTotal = 0;
-            tempRight = 0;
-        }
 
         // Draw neural network visualization
         // drawNeuralNetwork();
@@ -75,6 +49,37 @@ public class Main extends PApplet {
         inputBox = new TextBox(50, 100, 100, 30, this);
         targetBox = new TextBox(200, 100, 100, 30, this);
         System.out.println(nn.toString());
+        thread("train");
+    }
+
+    public void train() {
+        while (true) {
+            double x = Math.random() * 2 - 1;
+            double y = Math.random() * 2 - 1;
+
+            double output = 0;
+
+            nn.feedForward(new double[] { x, y });
+            if (x > 0 == y > 0) {
+                output = 1;
+            } else {
+                output = -1;
+            }
+
+            if (nn.getOutput()[0] > 0 == output > 0) {
+                numRight++;
+                tempRight++;
+            }
+            numTotal++;
+            tempTotal++;
+
+            nn.backProp(new double[] { output }, learningRate);
+
+            if (tempTotal == 250) {
+                tempTotal = 0;
+                tempRight = 0;
+            }
+        }
     }
 
     public void keyPressed() {
