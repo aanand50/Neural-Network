@@ -44,7 +44,6 @@ public class Layer {
 
         for (int i = 0; i < nodes.length; i++) {
             Node node = nodes[i];
-            node.outputError = 0;
             for (int j = 0; j < previousLayer.nodes.length; j++) {
                 node.weightErrors[j] = node.inputError * previousLayer.nodes[j].a;
             }
@@ -58,7 +57,7 @@ public class Layer {
             Node node = previousLayer.nodes[i];
             node.outputError = 0;
             for (int j = 0; j < nodes.length; j++) {
-                node.inputError += nodes[j].weights[i] * nodes[j].inputError;
+                node.outputError += nodes[j].weights[i] * nodes[j].inputError;
             }
         }
     }
