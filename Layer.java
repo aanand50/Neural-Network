@@ -18,6 +18,12 @@ public class Layer {
         }
     }
 
+    public void setInputs(double[] inputs) {
+        for (int i = 0; i < nodes.length; i++) {
+            nodes[i].a = inputs[i];
+        }
+    }
+
     public void feedForward(Function activationFunction, Layer previousLayer) {
         for (Node node : nodes) {
             double sum = 0;
@@ -81,5 +87,9 @@ public class Layer {
             outputs[i] = nodes[i].a;
         }
         return outputs;
+    }
+
+    public String toString() {
+        return nodes.length + " nodes\nfirst node has " + nodes[0].weights.length + " inputs\n";
     }
 }
