@@ -21,4 +21,8 @@ public class Node {
             weights[i] = random.nextDouble() * 2 - 1;
         }
     }
+
+    public void draw() {
+        
+    }
 }

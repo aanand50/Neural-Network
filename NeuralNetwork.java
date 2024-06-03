@@ -1,9 +1,11 @@
 import java.util.Random;
+import processing.core.*;
 
 public class NeuralNetwork {
     private Layer[] layers;
     private Function activationFunction;
     private Random random = new Random();
+    private PApplet parent = new PApplet();
 
     public NeuralNetwork(int[] layerSizes, Function activationFunction) {
         this.activationFunction = activationFunction;
@@ -60,5 +62,16 @@ public class NeuralNetwork {
             layerInfo += layers[i].toString() + "\n";
         }
         return layerInfo;
+    }
+
+    public void draw() {
+        int x_coord = 250;
+        int y_coord = 300;
+        int increments = 1000 / layers.length;
+        for (int layer = 0; layer < layers.length; layer++) {
+            parent.textSize(20);
+            parent.text("Layer " + layer+1, x_coord, y_coord - 50);
+            layers[layer].draw(x_coord + increments * layer, y_coord);
+        }
     }
 }

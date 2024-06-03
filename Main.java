@@ -20,6 +20,16 @@ public class Main extends PApplet {
         fullScreen();
     }
 
+    public void setup() {
+        nn = new NeuralNetwork(new int[] { 2, 5, 2, 1 }, Function.TANH);
+        feedForwardButton = new Button("Feed Forward", 50, 50, 100, 30, this);
+        backPropButton = new Button("Back Propagate", 200, 50, 120, 30, this);
+        inputBox = new TextBox(50, 100, 100, 30, this);
+        targetBox = new TextBox(200, 100, 100, 30, this);
+        System.out.println(nn.toString());
+        thread("train");
+    }
+
     public void draw() {
         background(255);
 
@@ -39,17 +49,7 @@ public class Main extends PApplet {
         textSize(15);
 
         // Draw neural network visualization
-        // drawNeuralNetwork();
-    }
-
-    public void setup() {
-        nn = new NeuralNetwork(new int[] { 2, 5, 2, 1 }, Function.TANH);
-        feedForwardButton = new Button("Feed Forward", 50, 50, 100, 30, this);
-        backPropButton = new Button("Back Propagate", 200, 50, 120, 30, this);
-        inputBox = new TextBox(50, 100, 100, 30, this);
-        targetBox = new TextBox(200, 100, 100, 30, this);
-        System.out.println(nn.toString());
-        thread("train");
+        nn.draw();
     }
 
     public void train() {

@@ -91,4 +91,11 @@ public class Layer {
     public String toString() {
         return nodes.length + " nodes\nfirst node has " + nodes[0].weights.length + " inputs\n";
     }
+
+    public void draw(int x, int y) {
+        int increments = 500 / nodes.length;
+        for (int node = 0; node < nodes.length; node++) {
+            nodes[node].draw();
+        }
+    }
 }

@@ -16,10 +16,21 @@ public class Button {
 
     public void display() {
         parent.fill(200);
+        this.hover();
         parent.rect(x, y, w, h);
         parent.fill(0);
         parent.textAlign(PApplet.CENTER, PApplet.CENTER);
         parent.text(label, x + w / 2, y + h / 2);
+    }
+
+    public void hover() {
+        if (parent.mouseX > x && parent.mouseX < x + w && parent.mouseY > y && parent.mouseY < y + h) {
+            parent.fill(0);
+        }
+        else {
+            parent.fill(200);
+        }
+        // parent.rect(x, y, w, h);
     }
 
     public boolean isClicked() {
