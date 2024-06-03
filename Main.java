@@ -7,14 +7,18 @@ public class Main extends PApplet {
     private Button backPropButton;
     private TextBox inputBox;
     private TextBox targetBox;
-    private double learningRate = 0.1;
+    private double learningRate = 0.03;
+    private int numRight;
+    private int numTotal;
+    private int tempRight;
+    private int tempTotal;
 
     public static void main(String[] args) {
         PApplet.runSketch(new String[] { "Main" }, new Main());
     }
 
     public void settings() {
-        size(800, 800);
+        fullScreen();
     }
 
     public void draw() {
@@ -25,18 +29,53 @@ public class Main extends PApplet {
         backPropButton.display();
         inputBox.display();
         targetBox.display();
+        // update method
+        inputBox.update();
+        targetBox.update();
+        
+        double x = Math.random() * 2 - 1;
+        double y = Math.random() * 2 - 1;
 
+        double output = 0;
+
+        nn.feedForward(new double[] {x, y});
+        if (x > 0 == y > 0) {
+            output = 1;
+        }
+        else {
+            output = -1;
+        }
+
+        if (nn.getOutput()[0] > 0 == output > 0) {
+            numRight++;
+            tempRight++;
+        }
+        numTotal++;
+        tempTotal++;
+
+        textSize(50);
+        text("" + (double) numRight / numTotal, width / 2, height / 2 - 100);
+        text("" + (double) tempRight / tempTotal, width / 2, height / 2);
+        textSize(15);
+        
+        nn.backProp(new double[] {output}, learningRate);
+
+        if (tempTotal == 250) {
+            tempTotal = 0;
+            tempRight = 0;
+        }
+        
         // Draw neural network visualization
         // drawNeuralNetwork();
     }
 
     public void setup() {
-        // activationFunction=
-        // nn
-        feedForwardButton = new Button("Feed Forward", 50, 500, 100, 30, this);
-        backPropButton = new Button("Back Propagate", 200, 500, 120, 30, this);
-        inputBox = new TextBox(50, 450, 100, 30, this);
-        targetBox = new TextBox(200, 450, 100, 30, this);
+        nn = new NeuralNetwork(new int[] {2, 5, 1}, Function.TANH);
+        feedForwardButton = new Button("Feed Forward", 50, 50, 100, 30, this);
+        backPropButton = new Button("Back Propagate", 200, 50, 120, 30, this);
+        inputBox = new TextBox(50, 100, 100, 30, this);
+        targetBox = new TextBox(200, 100, 100, 30, this);
+        System.out.println(nn.toString());
     }
 
     public void keyPressed() {
@@ -54,11 +93,11 @@ public class Main extends PApplet {
     }
 
     public void mouseClicked() {
-        if (feedForwardButton.isClicked(mouseX, mouseY)) {
+        if (feedForwardButton.isClicked()) {
             double[] inputs = parseInputs(inputBox.getText());
             nn.feedForward(inputs);
         }
-        if (backPropButton.isClicked(mouseX, mouseY)) {
+        if (backPropButton.isClicked()) {
             double[] targets = parseInputs(targetBox.getText());
             nn.backProp(targets, learningRate);
         }
