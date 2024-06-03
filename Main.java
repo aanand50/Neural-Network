@@ -34,7 +34,7 @@ public class Main extends PApplet {
 
         textSize(50);
         text("Overall percentage: " + percentage(numRight, numTotal) + "%", width / 2, height / 2 - 100);
-        text("Runnimg percentage: " + percentage(tempRight, tempTotal) + "%", width / 2, height / 2);
+        text("Running percentage: " + percentage(tempRight, tempTotal) + "%", width / 2, height / 2);
         text("Total: " + numTotal, width / 2, height / 2 - 200);
         textSize(15);
 
