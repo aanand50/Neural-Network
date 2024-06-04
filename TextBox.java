@@ -23,6 +23,7 @@ public class TextBox {
         }
         parent.rect(x, y, w, h);
         parent.fill(0);
+        parent.textSize(15);
         parent.textAlign(PApplet.LEFT, PApplet.CENTER);
         parent.text(text, x + 5, y + h / 2);
          
