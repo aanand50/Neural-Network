@@ -2,12 +2,11 @@ import processing.core.*;
 
 public class Main extends PApplet {
     private NeuralNetwork nn;
-    private Function activationFunction;
     private Button feedForwardButton;
     private Button backPropButton;
     private TextBox inputBox;
     private TextBox targetBox;
-    private double learningRate = 0.03;
+    private double learningRate = 0.3;
     private int numRight;
     private int numTotal;
     private int tempRight;
@@ -32,50 +31,55 @@ public class Main extends PApplet {
         // update method
         inputBox.update();
         targetBox.update();
-        
-        double x = Math.random() * 2 - 1;
-        double y = Math.random() * 2 - 1;
-
-        double output = 0;
-
-        nn.feedForward(new double[] {x, y});
-        if (x > 0 == y > 0) {
-            output = 1;
-        }
-        else {
-            output = -1;
-        }
-
-        if (nn.getOutput()[0] > 0 == output > 0) {
-            numRight++;
-            tempRight++;
-        }
-        numTotal++;
-        tempTotal++;
 
         textSize(50);
-        text("" + (double) numRight / numTotal, width / 2, height / 2 - 100);
-        text("" + (double) tempRight / tempTotal, width / 2, height / 2);
+        text("Overall percentage: " + percentage(numRight, numTotal) + "%", width / 2, height / 2 - 100);
+        text("Running percentage: " + percentage(tempRight, tempTotal) + "%", width / 2, height / 2);
+        text("Total: " + numTotal, width / 2, height / 2 - 200);
         textSize(15);
-        
-        nn.backProp(new double[] {output}, learningRate);
 
-        if (tempTotal == 250) {
-            tempTotal = 0;
-            tempRight = 0;
-        }
-        
         // Draw neural network visualization
         // drawNeuralNetwork();
     }
 
     public void setup() {
-        nn = new NeuralNetwork(new int[] {2, 5, 1}, Function.TANH);
+        nn = new NeuralNetwork(new int[] { 2, 5, 2, 1 }, Function.TANH);
         feedForwardButton = new Button("Feed Forward", 50, 50, 100, 30, this);
         backPropButton = new Button("Back Propagate", 200, 50, 120, 30, this);
         inputBox = new TextBox(50, 100, 100, 30, this);
         targetBox = new TextBox(200, 100, 100, 30, this);
         System.out.println(nn.toString());
+        thread("train");
+    }
+
+    public void train() {
+        while (true) {
+            double x = Math.random() * 2 - 1;
+            double y = Math.random() * 2 - 1;
+
+            double output = 0;
+
+            nn.feedForward(new double[] { x, y });
+            if (x > 0 == y > 0) {
+                output = 1;
+            } else {
+                output = -1;
+            }
+
+            if (nn.getOutput()[0] > 0 == output > 0) {
+                numRight++;
+                tempRight++;
+            }
+            numTotal++;
+            tempTotal++;
+
+            nn.backProp(new double[] { output }, learningRate);
+
+            if (tempTotal == 250) {
+                tempTotal = 0;
+                tempRight = 0;
+            }
+        }
     }
 
     public void keyPressed() {
@@ -110,5 +114,9 @@ public class Main extends PApplet {
             result[i] = Double.parseDouble(parts[i]);
         }
         return result;
+    }
+
+    private double percentage(int num, int den) {
+        return Math.floor((double) num / den * 1000) / 10;
     }
 }
