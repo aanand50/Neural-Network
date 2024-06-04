@@ -19,6 +19,7 @@ public class Button {
         parent.rect(x, y, w, h);
         parent.fill(0);
         parent.textAlign(PApplet.CENTER, PApplet.CENTER);
+        parent.textSize(15);
         parent.text(label, x + w / 2, y + h / 2);
     }
 
