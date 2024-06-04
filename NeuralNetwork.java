@@ -5,16 +5,17 @@ public class NeuralNetwork {
     private Layer[] layers;
     private Function activationFunction;
     private Random random = new Random();
-    private PApplet parent = new PApplet();
+    private PApplet parent;
 
-    public NeuralNetwork(int[] layerSizes, Function activationFunction) {
+    public NeuralNetwork(int[] layerSizes, Function activationFunction, PApplet parent) {
         this.activationFunction = activationFunction;
         layers = new Layer[layerSizes.length];
         int numInputs = 0;
         for (int i = 0; i < layers.length; i++) {
-            layers[i] = new Layer(layerSizes[i], numInputs, random);
+            layers[i] = new Layer(layerSizes[i], numInputs, random, parent);
             numInputs = layerSizes[i];
         }
+        this.parent = parent;
     }
 
     public void feedForward(double[] inputs) {
@@ -64,14 +65,13 @@ public class NeuralNetwork {
         return layerInfo;
     }
 
-    public void draw() {
+    public void visualization() {
         int x_coord = 250;
         int y_coord = 300;
         int increments = 1000 / layers.length;
         for (int layer = 0; layer < layers.length; layer++) {
-            parent.textSize(20);
-            parent.text("Layer " + layer+1, x_coord, y_coord - 50);
-            layers[layer].draw(x_coord + increments * layer, y_coord);
+            parent.text("Layer " + (layer + 1), x_coord + increments * layer - 10, y_coord);
+            layers[layer].visualization(x_coord + increments * layer, y_coord);
         }
     }
 }

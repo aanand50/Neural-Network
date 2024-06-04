@@ -1,19 +1,21 @@
 import java.util.Random;
 
+import processing.core.*;
+
 public class Layer {
     private Node[] nodes;
 
-    public Layer(int size, int numInputs, Random random) {
+    public Layer(int size, int numInputs, Random random, PApplet parent) {
         nodes = new Node[size];
         for (int i = 0; i < size; i++) {
-            nodes[i] = new Node(numInputs, random);
+            nodes[i] = new Node(numInputs, random, parent);
         }
     }
 
-    protected Layer(double[] inputs) {
+    protected Layer(double[] inputs, PApplet parent) {
         nodes = new Node[inputs.length];
         for (int i = 0; i < inputs.length; i++) {
-            nodes[i] = new Node(0);
+            nodes[i] = new Node(0, parent);
             nodes[i].a = inputs[i];
         }
     }
@@ -92,10 +94,10 @@ public class Layer {
         return nodes.length + " nodes\nfirst node has " + nodes[0].weights.length + " inputs\n";
     }
 
-    public void draw(int x, int y) {
-        int increments = 500 / nodes.length;
+    public void visualization(int x, int y) {
+        int increments = 365;
         for (int node = 0; node < nodes.length; node++) {
-            nodes[node].draw();
+            nodes[node].visualization(x, increments + 100 * node);
         }
     }
 }

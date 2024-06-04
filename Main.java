@@ -17,11 +17,11 @@ public class Main extends PApplet {
     }
 
     public void settings() {
-        fullScreen();
+        size(1920, 1080);
     }
 
     public void setup() {
-        nn = new NeuralNetwork(new int[] { 2, 5, 2, 1 }, Function.TANH);
+        nn = new NeuralNetwork(new int[] { 2, 5, 2, 1 }, Function.TANH, this);
         feedForwardButton = new Button("Feed Forward", 50, 50, 100, 30, this);
         backPropButton = new Button("Back Propagate", 200, 50, 120, 30, this);
         inputBox = new TextBox(50, 100, 100, 30, this);
@@ -33,6 +33,7 @@ public class Main extends PApplet {
     public void draw() {
         background(255);
 
+        textSize(15);
         // Draw UI components
         feedForwardButton.display();
         backPropButton.display();
@@ -42,14 +43,14 @@ public class Main extends PApplet {
         inputBox.update();
         targetBox.update();
 
-        textSize(50);
-        text("Overall percentage: " + percentage(numRight, numTotal) + "%", width / 2, height / 2 - 100);
-        text("Running percentage: " + percentage(tempRight, tempTotal) + "%", width / 2, height / 2);
-        text("Total: " + numTotal, width / 2, height / 2 - 200);
-        textSize(15);
+        textSize(40);
+        text("Overall percentage: " + percentage(numRight, numTotal) + "%", width / 2 + 400, height / 2 - 100);
+        text("Running percentage: " + percentage(tempRight, tempTotal) + "%", width / 2 + 400, height / 2);
+        text("Total: " + numTotal, width / 2 + 400, height / 2 - 200);
 
         // Draw neural network visualization
-        nn.draw();
+        textSize(25);
+        nn.visualization();
     }
 
     public void train() {
