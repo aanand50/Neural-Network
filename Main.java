@@ -4,30 +4,26 @@ public class Main extends PApplet {
     private NeuralNetwork nn;
     private Button feedForwardButton;
     private Button backPropButton;
+    private Button finishTrainingButton;
+    private Button randomButton;
     private TextBox inputBox;
     private TextBox targetBox;
+    private boolean trainDone;
+    private String nnOutput;
+    private int digitIndex;
     private double learningRate = 0.3;
     private int numRight;
     private int numTotal;
     private int tempRight;
     private int tempTotal;
+    private Image[] images;
 
     public static void main(String[] args) {
         PApplet.runSketch(new String[] { "Main" }, new Main());
     }
 
     public void settings() {
-        size(1920, 1080);
-    }
-
-    public void setup() {
-        nn = new NeuralNetwork(new int[] { 2, 5, 2, 1 }, Function.TANH, this);
-        feedForwardButton = new Button("Feed Forward", 50, 50, 100, 30, this);
-        backPropButton = new Button("Back Propagate", 200, 50, 120, 30, this);
-        inputBox = new TextBox(50, 100, 100, 30, this);
-        targetBox = new TextBox(200, 100, 100, 30, this);
-        System.out.println(nn.toString());
-        thread("train");
+        fullScreen();
     }
 
     public void draw() {
@@ -37,44 +33,68 @@ public class Main extends PApplet {
         // Draw UI components
         feedForwardButton.display();
         backPropButton.display();
+        finishTrainingButton.display();
+        randomButton.display();
         inputBox.display();
         targetBox.display();
         // update method
         inputBox.update();
         targetBox.update();
 
-        textSize(40);
-        text("Overall percentage: " + percentage(numRight, numTotal) + "%", width / 2 + 400, height / 2 - 100);
-        text("Running percentage: " + percentage(tempRight, tempTotal) + "%", width / 2 + 400, height / 2);
-        text("Total: " + numTotal, width / 2 + 400, height / 2 - 200);
+        textSize(50);
+        text("Overall percentage: " + percentage(numRight, numTotal) + "%", width / 2 + 300, height / 2 - 100);
+        text("Running percentage: " + percentage(tempRight, tempTotal) + "%", width / 2 + 300, height / 2);
+        text("Total: " + numTotal, width / 2 + 300, height / 2 - 200);
+        textSize(30);
+        text("NN Guess: " + nnOutput, width / 2 + 650, height / 2 + 300);
+        textSize(15);
 
-        // Draw neural network visualization
-        textSize(25);
+        if (images != null) {
+            images[digitIndex].draw(75, 300, 5, 5);
+        }
+
+        // neural network visualization
         nn.visualization();
     }
 
+    public void setup() {
+        nn = new NeuralNetwork(new int[] { 28 * 28, 15, 13, 10 }, Function.SIGMOID, this);
+        feedForwardButton = new Button("Feed Forward", 50, 50, 100, 30, this);
+        backPropButton = new Button("Back Propagate", 200, 50, 120, 30, this);
+        finishTrainingButton = new Button("Finish", 600, 50, 120, 30, this);
+        randomButton = new Button("Random Digit", 400, 50, 120, 30, this);
+        inputBox = new TextBox(50, 100, 100, 30, this);
+        targetBox = new TextBox(200, 100, 100, 30, this);
+        System.out.println(nn.toString());
+        thread("train");
+    }
+
     public void train() {
-        while (true) {
-            double x = Math.random() * 2 - 1;
-            double y = Math.random() * 2 - 1;
+        images = Train.load(this);
+        while (!trainDone) {
+            int i = (int) (Math.random() * images.length);
+            int correct = images[i].getLabel();
 
-            double output = 0;
+            nn.feedForward(images[i].getPixels());
 
-            nn.feedForward(new double[] { x, y });
-            if (x > 0 == y > 0) {
-                output = 1;
-            } else {
-                output = -1;
+            double[] outputs = nn.getOutput();
+            int max = 0;
+            for (int j = 0; j < 10; j++) {
+                if (outputs[j] > outputs[max]) {
+                    max = j;
+                }
             }
 
-            if (nn.getOutput()[0] > 0 == output > 0) {
+            if (max == correct) {
                 numRight++;
                 tempRight++;
             }
             numTotal++;
             tempTotal++;
 
-            nn.backProp(new double[] { output }, learningRate);
+            double[] targets = new double[10];
+            targets[correct] = 1;
+            nn.backProp(targets, learningRate);
 
             if (tempTotal == 250) {
                 tempTotal = 0;
@@ -105,6 +125,24 @@ public class Main extends PApplet {
         if (backPropButton.isClicked()) {
             double[] targets = parseInputs(targetBox.getText());
             nn.backProp(targets, learningRate);
+        }
+        if (finishTrainingButton.isClicked()) {
+            trainDone = true;
+        }
+        if (randomButton.isClicked()) {
+            digitIndex = (int) (Math.random() * images.length);
+            nn.feedForward(images[digitIndex].getPixels());
+            String output = "\n";
+            int max = 0;
+            double[] outputs = nn.getOutput();
+            for (int i = 0; i < 10; i++) {
+                output += i + ": " + percentage((int) (outputs[i] * 1000), 1000) + "%\n";
+                if (outputs[i] > outputs[max]) {
+                    max = i;
+                }
+            }
+            output = max + output;
+            nnOutput = output;
         }
     }
 

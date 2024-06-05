@@ -66,12 +66,21 @@ public class NeuralNetwork {
     }
 
     public void visualization() {
-        int x_coord = 250;
-        int y_coord = 300;
+        parent.textSize(25);
+        int x_coord = 100;
+        int y_coord = 200;
         int increments = 1000 / layers.length;
         for (int layer = 0; layer < layers.length; layer++) {
-            parent.text("Layer " + (layer + 1), x_coord + increments * layer - 10, y_coord);
-            layers[layer].visualization(x_coord + increments * layer, y_coord);
+            if (layer == 0) {
+                parent.text("Input Layer", x_coord + increments * layer - 10, y_coord);
+            }
+            else if (layer == layers.length - 1) {
+                parent.text("Output Layer", x_coord + increments * layer - 10, y_coord);
+            }
+            else {
+                parent.text("Layer " + (layer + 1), x_coord + increments * layer - 10, y_coord);
+                layers[layer].visualization(x_coord + increments * layer, y_coord);
+            }
         }
     }
 }

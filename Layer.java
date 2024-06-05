@@ -95,7 +95,7 @@ public class Layer {
     }
 
     public void visualization(int x, int y) {
-        int increments = 365;
+        int increments = 245;
         for (int node = 0; node < nodes.length; node++) {
             nodes[node].visualization(x, increments + 100 * node);
         }
