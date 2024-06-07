@@ -1,18 +1,21 @@
 import java.util.Random;
+import processing.core.*;
 
 public class NeuralNetwork {
     private Layer[] layers;
     private Function activationFunction;
     private Random random = new Random();
+    private PApplet parent;
 
-    public NeuralNetwork(int[] layerSizes, Function activationFunction) {
+    public NeuralNetwork(int[] layerSizes, Function activationFunction, PApplet parent) {
         this.activationFunction = activationFunction;
         layers = new Layer[layerSizes.length];
         int numInputs = 0;
         for (int i = 0; i < layers.length; i++) {
-            layers[i] = new Layer(layerSizes[i], numInputs, random);
+            layers[i] = new Layer(layerSizes[i], numInputs, random, parent);
             numInputs = layerSizes[i];
         }
+        this.parent = parent;
     }
 
     public void feedForward(double[] inputs) {
@@ -60,5 +63,24 @@ public class NeuralNetwork {
             layerInfo += layers[i].toString() + "\n";
         }
         return layerInfo;
+    }
+
+    public void visualization() {
+        parent.textSize(25);
+        int x_coord = 100;
+        int y_coord = 200;
+        int increments = 1000 / layers.length;
+        for (int layer = 0; layer < layers.length; layer++) {
+            if (layer == 0) {
+                parent.text("Input Layer", x_coord + increments * layer - 10, y_coord);
+            }
+            else if (layer == layers.length - 1) {
+                parent.text("Output Layer", x_coord + increments * layer - 10, y_coord);
+            }
+            else {
+                parent.text("Layer " + (layer + 1), x_coord + increments * layer - 10, y_coord);
+                layers[layer].visualization(x_coord + increments * layer, y_coord);
+            }
+        }
     }
 }

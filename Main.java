@@ -29,6 +29,7 @@ public class Main extends PApplet {
     public void draw() {
         background(255);
 
+        textSize(15);
         // Draw UI components
         feedForwardButton.display();
         backPropButton.display();
@@ -41,20 +42,23 @@ public class Main extends PApplet {
         targetBox.update();
 
         textSize(50);
-        text("Overall percentage: " + percentage(numRight, numTotal) + "%", width / 2, height / 2 - 100);
-        text("Running percentage: " + percentage(tempRight, tempTotal) + "%", width / 2, height / 2);
-        text("Total: " + numTotal, width / 2, height / 2 - 200);
+        text("Overall percentage: " + percentage(numRight, numTotal) + "%", width / 2 + 300, height / 2 - 100);
+        text("Running percentage: " + percentage(tempRight, tempTotal) + "%", width / 2 + 300, height / 2);
+        text("Total: " + numTotal, width / 2 + 300, height / 2 - 200);
         textSize(30);
-        text("NN Guess: " + nnOutput, width / 2, height / 2 + 300);
+        text("NN Guess: " + nnOutput, 825, 500);
         textSize(15);
 
         if (images != null) {
-            images[digitIndex].draw(100, 250, 10, 10);
+            images[digitIndex].draw(75, 300, 5, 5);
         }
+
+        // neural network visualization
+        nn.visualization();
     }
 
     public void setup() {
-        nn = new NeuralNetwork(new int[] { 28 * 28, 100, 13, 10 }, Function.SIGMOID);
+        nn = new NeuralNetwork(new int[] { 28 * 28, 15, 13, 10 }, Function.SIGMOID, this);
         feedForwardButton = new Button("Feed Forward", 50, 50, 100, 30, this);
         backPropButton = new Button("Back Propagate", 200, 50, 120, 30, this);
         finishTrainingButton = new Button("Finish", 600, 50, 120, 30, this);
