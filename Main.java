@@ -46,7 +46,7 @@ public class Main extends PApplet {
         text("Running percentage: " + percentage(tempRight, tempTotal) + "%", width / 2 + 300, height / 2);
         text("Total: " + numTotal, width / 2 + 300, height / 2 - 200);
         textSize(30);
-        text("NN Guess: " + nnOutput, width / 2 + 650, height / 2 + 300);
+        text("NN Guess: " + nnOutput, 825, 500);
         textSize(15);
 
         if (images != null) {
