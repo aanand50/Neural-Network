@@ -29,6 +29,6 @@ public class Node {
 
     public void visualization(int x, int y) {
         parent.rect(x, y, 30, 30, 10);
-        parent.fill(0);
+        parent.fill(0, 0, 0);
     }
 }

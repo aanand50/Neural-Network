@@ -74,13 +74,18 @@ public class NeuralNetwork {
             if (layer == 0) {
                 parent.text("Input Layer", x_coord + increments * layer - 10, y_coord);
             }
+            else if (layer == 1) {
+                parent.text("Layer " + (layer + 1), x_coord + increments * layer - 10, y_coord);
+                layers[layer].visualization(x_coord + increments * layer, y_coord);
+            }
             else if (layer == layers.length - 1) {
                 parent.text("Output Layer", x_coord + increments * layer - 10, y_coord);
             }
             else {
                 parent.text("Layer " + (layer + 1), x_coord + increments * layer - 10, y_coord);
-                layers[layer].visualization(x_coord + increments * layer, y_coord);
+                layers[layer].visualization(x_coord + increments * layer, y_coord, x_coord + increments * (layer - 1)); 
             }
         }
+        parent.stroke(0);
     }
 }

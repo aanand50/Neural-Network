@@ -4,12 +4,14 @@ import processing.core.*;
 
 public class Layer {
     private Node[] nodes;
+    private PApplet parent;
 
     public Layer(int size, int numInputs, Random random, PApplet parent) {
         nodes = new Node[size];
         for (int i = 0; i < size; i++) {
             nodes[i] = new Node(numInputs, random, parent);
         }
+        this.parent = parent;
     }
 
     protected Layer(double[] inputs, PApplet parent) {
@@ -18,6 +20,7 @@ public class Layer {
             nodes[i] = new Node(0, parent);
             nodes[i].a = inputs[i];
         }
+        this.parent = parent;
     }
 
     public void setInputs(double[] inputs) {
@@ -98,6 +101,19 @@ public class Layer {
         int increments = 245;
         for (int node = 0; node < nodes.length; node++) {
             nodes[node].visualization(x, increments + 50 * node);
+        }
+    }
+
+    public void visualization(int x, int y, int prevX) {
+        int increments = 245;
+        
+        for (int node = 0; node < nodes.length; node++) {
+            nodes[node].visualization(x, increments + 50 * node);
+            for (int weight = 0; weight < nodes[node].weights.length; weight++) {
+                System.out.println(nodes[node].weights[weight]);
+                parent.stroke((int)(Math.abs(nodes[node].weights[weight] * 1000) % 255), 100, 100);
+                parent.line(x + 15, increments + 50 * node + 15, prevX + 15, increments + 50 * weight + 15);
+            }
         }
     }
 }

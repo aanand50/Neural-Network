@@ -26,10 +26,10 @@ public class Button {
 
     public void hover() {
         if (parent.mouseX > x && parent.mouseX < x + w && parent.mouseY > y && parent.mouseY < y + h) {
-            parent.fill(0);
+            parent.fill(180);
         }
         else {
-            parent.fill(200);
+            parent.fill(224);
         }
         // parent.rect(x, y, w, h);
     }

@@ -2,8 +2,12 @@ import processing.core.*;
 
 public class Main extends PApplet {
     private NeuralNetwork nn;
+    private Button feedForwardButton;
+    private Button backPropButton;
     private Button finishTrainingButton;
     private Button randomButton;
+    private TextBox inputBox;
+    private TextBox targetBox;
     private boolean trainDone;
     private String nnOutput;
     private int digitIndex;
@@ -19,8 +23,7 @@ public class Main extends PApplet {
     }
 
     public void settings() {
-        // fullScreen();
-        size(1920,1080);
+
     }
 
     public void draw() {
@@ -28,9 +31,15 @@ public class Main extends PApplet {
 
         textSize(15);
         // Draw UI components
+        feedForwardButton.display();
+        backPropButton.display();
         finishTrainingButton.display();
         randomButton.display();
+        inputBox.display();
+        targetBox.display();
         // update method
+        inputBox.update();
+        targetBox.update();
 
         textSize(50);
         text("Overall percentage: " + percentage(numRight, numTotal) + "%", width / 2 + 300, height / 2 - 100);
@@ -90,7 +99,29 @@ public class Main extends PApplet {
         }
     }
 
+    public void keyPressed() {
+        if (key == '\b') {
+            if (inputBox.isActive())
+                inputBox.removeLastChar();
+            if (targetBox.isActive())
+                targetBox.removeLastChar();
+        } else {
+            if (inputBox.isActive())
+                inputBox.appendText(key);
+            if (targetBox.isActive())
+                targetBox.appendText(key);
+        }
+    }
+
     public void mouseClicked() {
+        if (feedForwardButton.isClicked()) {
+            double[] inputs = parseInputs(inputBox.getText());
+            nn.feedForward(inputs);
+        }
+        if (backPropButton.isClicked()) {
+            double[] targets = parseInputs(targetBox.getText());
+            nn.backProp(targets, learningRate);
+        }
         if (finishTrainingButton.isClicked()) {
             trainDone = true;
         }
