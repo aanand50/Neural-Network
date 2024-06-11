@@ -27,11 +27,8 @@ public class Main extends PApplet {
         background(255);
 
         // Draw UI components
-        rectMode(CORNER);
-        stroke(255);
-        fill(19, 131, 137);
-        rect(0, 0, 205, 215);
-        fill(0);
+        fill(102, 255, 255);
+        rect(0, 0, 150, 200);
         textSize(24);
         text("NN Interface", 100, 50);
         finishTrainingButton.display();
@@ -47,7 +44,7 @@ public class Main extends PApplet {
         textSize(15);
 
         if (images != null) {
-            images[digitIndex].draw(82, 380, 5, 5);
+            images[digitIndex].draw(75, 300, 5, 5);
         }
 
         // neural network visualization

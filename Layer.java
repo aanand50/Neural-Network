@@ -98,21 +98,20 @@ public class Layer {
     }
 
     public void visualization(int x, int y) {
-        int increments = 245;
+        y = y + 40;
         for (int node = 0; node < nodes.length; node++) {
-            nodes[node].visualization(x, increments + 50 * node);
+            nodes[node].visualization(x - 15, y + 50 * node);
         }
     }
 
     public void visualization(int x, int y, int prevX) {
-        int increments = 245;
-        
+        y = y + 40;
         for (int node = 0; node < nodes.length; node++) {
-            nodes[node].visualization(x, increments + 50 * node);
+            nodes[node].visualization(x - 15, y + 50 * node);
             for (int weight = 0; weight < nodes[node].weights.length; weight++) {
                 System.out.println(nodes[node].weights[weight]);
                 parent.stroke((int)(Math.abs(nodes[node].weights[weight] * 1000) % 255), 100, 100);
-                parent.line(x + 15, increments + 50 * node + 15, prevX + 15, increments + 50 * weight + 15);
+                parent.line(x, y + 50 * node + 15, prevX, y + 50 * weight + 15);
             }
         }
     }

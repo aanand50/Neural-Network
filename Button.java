@@ -17,11 +17,12 @@ public class Button {
     public void display() {
         parent.fill(200);
         this.hover();
+        parent.rectMode(PApplet.CENTER);
         parent.rect(x, y, w, h);
         parent.fill(0);
         parent.textAlign(PApplet.CENTER, PApplet.CENTER);
         parent.textSize(15);
-        parent.text(label, x + w / 2, y + h / 2);
+        parent.text(label, x, y - h / 2 + 15);
     }
 
     public void hover() {

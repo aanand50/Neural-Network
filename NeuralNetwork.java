@@ -67,23 +67,34 @@ public class NeuralNetwork {
 
     public void visualization() {
         parent.textSize(25);
-        int x_coord = 100;
-        int y_coord = 200;
+        int x_coord = 150;
+        int y_coord = 280;
         int increments = 1000 / layers.length;
         for (int layer = 0; layer < layers.length; layer++) {
+            parent.rectMode(PApplet.CENTER);
+            parent.fill(224);
+            parent.stroke(0);
+            
             if (layer == 0) {
-                parent.text("Input Layer", x_coord + increments * layer - 10, y_coord);
-            }
-            else if (layer == 1) {
-                parent.text("Layer " + (layer + 1), x_coord + increments * layer - 10, y_coord);
-                layers[layer].visualization(x_coord + increments * layer, y_coord);
+                parent.rect(x_coord + increments * layer, y_coord, 160, 45);
+                parent.fill(0);
+                parent.text("Input Layer", x_coord + increments * layer, y_coord);
             }
             else if (layer == layers.length - 1) {
-                parent.text("Output Layer", x_coord + increments * layer - 10, y_coord);
+                parent.rect(x_coord + increments * layer, y_coord, 185, 45);
+                parent.fill(0);
+                parent.text("Output Layer", x_coord + increments * layer, y_coord);
             }
             else {
-                parent.text("Layer " + (layer + 1), x_coord + increments * layer - 10, y_coord);
-                layers[layer].visualization(x_coord + increments * layer, y_coord, x_coord + increments * (layer - 1)); 
+                parent.rect(x_coord + increments * layer, y_coord, 150, 45);
+                parent.fill(0);
+                parent.text("Layer " + (layer + 1), x_coord + increments * layer, y_coord);
+                if (layer == 1) {
+                    layers[layer].visualization(x_coord + increments * layer, y_coord);
+                }
+                else {
+                    layers[layer].visualization(x_coord + increments * layer, y_coord, x_coord + increments * (layer - 1)); 
+                }
             }
         }
         parent.stroke(0);

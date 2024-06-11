@@ -18,7 +18,10 @@ public class Image {
             parent.rect(x + (i % 28) * w, y + (i / 28) * w, w, h);
         }
         parent.textSize(32);
-        parent.text(label, x, y - 40);
+        parent.text("Image", x + w * 14, y - 30);
+        parent.text("Number", x + w * 14, y + w * 28 + 40);
+        parent.textSize(48);
+        parent.text(label, x + w * 14, y + w * 28 + 90);
     }
 
     public int getLabel() {
