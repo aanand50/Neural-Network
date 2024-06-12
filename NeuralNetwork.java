@@ -84,6 +84,7 @@ public class NeuralNetwork {
                 parent.rect(x_coord + increments * layer, y_coord, 185, 45);
                 parent.fill(0);
                 parent.text("Output Layer", x_coord + increments * layer, y_coord);
+                layers[layer].visualization(x_coord + increments * layer, y_coord, x_coord + increments * (layer - 1)); 
             }
             else {
                 parent.rect(x_coord + increments * layer, y_coord, 150, 45);

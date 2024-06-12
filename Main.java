@@ -39,11 +39,11 @@ public class Main extends PApplet {
         // update method
 
         textSize(50);
-        text("Total Iterations: " + numTotal, width / 2 + 500, height / 2 - 200);
-        text("Overall Accuracy: " + percentage(numRight, numTotal) + "%", width / 2 + 500, height / 2 - 100);
-        text("Running Accuracy: " + percentage(tempRight, tempTotal) + "%", width / 2 + 500, height / 2);
-        textSize(30);
-        text("NN Guess: " + nnOutput, 900, 575);
+        text("Total Iterations: " + numTotal, width / 2 + 500, 75);
+        text("Overall Accuracy: " + percentage(numRight, numTotal) + "%", width / 2 + 500, 150);
+        text("Running Accuracy: " + percentage(tempRight, tempTotal) + "%", width / 2 + 500, 225);
+        textSize(40);
+        text("NN Guess: " + nnOutput, 1450, 625);
         textSize(15);
 
         if (images != null) {
