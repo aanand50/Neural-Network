@@ -1,5 +1,9 @@
 # APCSA Final Project
 
+Aditya Anand (aanand50@stuy.edu)
+Flint Mueller (fmueller50@stuy.edu)
+Jason Chao (jchao50@stuy.edu)
+
 ## Functionalities
 
 ### Neural Network:
