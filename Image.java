@@ -24,6 +24,21 @@ public class Image {
         parent.text(label, x + w * 14, y + w * 28 + 90);
     }
 
+    public void update(int x, int y, int w, int h) {
+        if (parent.mousePressed) {
+            int mx = parent.mouseX;
+            int my = parent.mouseY;
+            if (mx > x && mx < x + w * 28 && my > y && my < y + h * 28) {
+                int i = (mx - x) / w + (my - y) / h * 28;
+                if (parent.mouseButton == PApplet.LEFT) {
+                    pixels[i] = 1;
+                } else if (parent.mouseButton == PApplet.RIGHT) {
+                    pixels[i] = 0;
+                }
+            }
+        }
+    }
+
     public int getLabel() {
         return label;
     }
