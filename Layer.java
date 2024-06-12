@@ -4,12 +4,14 @@ import processing.core.*;
 
 public class Layer {
     private Node[] nodes;
+    private PApplet parent;
 
     public Layer(int size, int numInputs, Random random, PApplet parent) {
         nodes = new Node[size];
         for (int i = 0; i < size; i++) {
             nodes[i] = new Node(numInputs, random, parent);
         }
+        this.parent = parent;
     }
 
     protected Layer(double[] inputs, PApplet parent) {
@@ -18,6 +20,7 @@ public class Layer {
             nodes[i] = new Node(0, parent);
             nodes[i].a = inputs[i];
         }
+        this.parent = parent;
     }
 
     public void setInputs(double[] inputs) {
@@ -95,9 +98,27 @@ public class Layer {
     }
 
     public void visualization(int x, int y) {
-        int increments = 245;
+        y = y + 40;
         for (int node = 0; node < nodes.length; node++) {
-            nodes[node].visualization(x, increments + 50 * node);
+            nodes[node].visualization(x - 15, y + 50 * node);
+        }
+    }
+
+    public void visualization(int x, int y, int prevX) {
+        y = y + 40;
+        for (int node = 0; node < nodes.length; node++) {
+            nodes[node].visualization(x - 15, y + 50 * node);
+            for (int weight = 0; weight < nodes[node].weights.length; weight++) {
+                int rgb = (int) ((nodes[node].weights[weight] / 5) * 255);
+                if (rgb > 0) {
+                    parent.stroke(rgb * 3, rgb * 2, rgb);
+                }
+                else if (rgb < 0) {
+                    rgb *= -1;
+                    parent.stroke(rgb, rgb * 2, rgb * 3);
+                }
+                parent.line(x, y + 50 * node + 15, prevX, y + 50 * weight + 15);
+            }
         }
     }
 }

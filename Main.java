@@ -2,12 +2,8 @@ import processing.core.*;
 
 public class Main extends PApplet {
     private NeuralNetwork nn;
-    private Button feedForwardButton;
-    private Button backPropButton;
     private Button finishTrainingButton;
     private Button randomButton;
-    private TextBox inputBox;
-    private TextBox targetBox;
     private boolean trainDone;
     private String nnOutput;
     private int digitIndex;
@@ -23,34 +19,35 @@ public class Main extends PApplet {
     }
 
     public void settings() {
-        fullScreen();
+        // fullScreen();
+        size(1920,1080);
     }
 
     public void draw() {
         background(255);
 
-        textSize(15);
         // Draw UI components
-        feedForwardButton.display();
-        backPropButton.display();
+        rectMode(CORNER);
+        stroke(255);
+        fill(19, 131, 137);
+        rect(0, 0, 205, 215);
+        fill(0);
+        textSize(24);
+        text("NN Interface", 100, 50);
         finishTrainingButton.display();
         randomButton.display();
-        inputBox.display();
-        targetBox.display();
         // update method
-        inputBox.update();
-        targetBox.update();
 
         textSize(50);
-        text("Overall percentage: " + percentage(numRight, numTotal) + "%", width / 2 + 300, height / 2 - 100);
-        text("Running percentage: " + percentage(tempRight, tempTotal) + "%", width / 2 + 300, height / 2);
-        text("Total: " + numTotal, width / 2 + 300, height / 2 - 200);
-        textSize(30);
-        text("NN Guess: " + nnOutput, 825, 500);
+        text("Total Iterations: " + numTotal, width / 2 + 500, 75);
+        text("Overall Accuracy: " + percentage(numRight, numTotal) + "%", width / 2 + 500, 150);
+        text("Running Accuracy: " + percentage(tempRight, tempTotal) + "%", width / 2 + 500, 225);
+        textSize(40);
+        text("NN Guess: " + nnOutput, 1450, 625);
         textSize(15);
 
         if (images != null) {
-            images[digitIndex].draw(75, 300, 5, 5);
+            images[digitIndex].draw(82, 380, 5, 5);
         }
 
         // neural network visualization
@@ -59,12 +56,8 @@ public class Main extends PApplet {
 
     public void setup() {
         nn = new NeuralNetwork(new int[] { 28 * 28, 15, 13, 10 }, Function.SIGMOID, this);
-        feedForwardButton = new Button("Feed Forward", 50, 50, 100, 30, this);
-        backPropButton = new Button("Back Propagate", 200, 50, 120, 30, this);
-        finishTrainingButton = new Button("Finish", 600, 50, 120, 30, this);
-        randomButton = new Button("Random Digit", 400, 50, 120, 30, this);
-        inputBox = new TextBox(50, 100, 100, 30, this);
-        targetBox = new TextBox(200, 100, 100, 30, this);
+        finishTrainingButton = new Button("Finish", 100, 100, 120, 30, this);
+        randomButton = new Button("Random Digit", 100, 150, 120, 30, this);
         System.out.println(nn.toString());
         thread("train");
     }
@@ -103,29 +96,7 @@ public class Main extends PApplet {
         }
     }
 
-    public void keyPressed() {
-        if (key == '\b') {
-            if (inputBox.isActive())
-                inputBox.removeLastChar();
-            if (targetBox.isActive())
-                targetBox.removeLastChar();
-        } else {
-            if (inputBox.isActive())
-                inputBox.appendText(key);
-            if (targetBox.isActive())
-                targetBox.appendText(key);
-        }
-    }
-
     public void mouseClicked() {
-        if (feedForwardButton.isClicked()) {
-            double[] inputs = parseInputs(inputBox.getText());
-            nn.feedForward(inputs);
-        }
-        if (backPropButton.isClicked()) {
-            double[] targets = parseInputs(targetBox.getText());
-            nn.backProp(targets, learningRate);
-        }
         if (finishTrainingButton.isClicked()) {
             trainDone = true;
         }

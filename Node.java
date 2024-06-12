@@ -28,7 +28,18 @@ public class Node {
     }
 
     public void visualization(int x, int y) {
+        parent.rectMode(PApplet.CORNER);
         parent.rect(x, y, 30, 30, 10);
-        parent.fill(0);
+        int rgb = (int) (bias / 4 * 255);
+        System.out.println("Bias: " + bias + " RGB: " + rgb);
+        if (rgb > 0) {
+            if (rgb > 0) {
+                parent.fill(rgb * 3, rgb * 2, rgb);
+            }
+            else if (rgb < 0) {
+                rgb *= -1;
+                parent.fill(rgb, rgb * 2, rgb * 3);
+            }
+        }
     }
 }
