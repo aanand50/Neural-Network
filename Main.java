@@ -4,6 +4,7 @@ public class Main extends PApplet {
     private NeuralNetwork nn;
     private Button finishTrainingButton;
     private Button randomButton;
+    private Button refreshButton;
     private boolean trainDone;
     private String nnOutput;
     private int digitIndex;
@@ -36,6 +37,7 @@ public class Main extends PApplet {
         text("NN Interface", 100, 50);
         finishTrainingButton.display();
         randomButton.display();
+        refreshButton.display();
         // update method
 
         textSize(50);
@@ -48,6 +50,7 @@ public class Main extends PApplet {
 
         if (images != null) {
             images[digitIndex].draw(82, 380, 5, 5);
+            images[digitIndex].update(82, 380, 5, 5);
         }
 
         // neural network visualization
@@ -58,6 +61,7 @@ public class Main extends PApplet {
         nn = new NeuralNetwork(new int[] { 28 * 28, 15, 13, 10 }, Function.SIGMOID, this);
         finishTrainingButton = new Button("Finish", 100, 100, 120, 30, this);
         randomButton = new Button("Random Digit", 100, 150, 120, 30, this);
+        refreshButton = new Button("Refresh Prediction", 100, 200, 120, 30, this);
         System.out.println(nn.toString());
         thread("train");
     }
@@ -102,6 +106,8 @@ public class Main extends PApplet {
         }
         if (randomButton.isClicked()) {
             digitIndex = (int) (Math.random() * images.length);
+        }
+        if (randomButton.isClicked() || refreshButton.isClicked()) {
             nn.feedForward(images[digitIndex].getPixels());
             String output = "\n";
             int max = 0;
