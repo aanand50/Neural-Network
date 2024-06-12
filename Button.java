@@ -36,6 +36,6 @@ public class Button {
     }
 
     public boolean isClicked() {
-        return parent.mouseX > x && parent.mouseX < x + w && parent.mouseY > y && parent.mouseY < y + h;
+        return (parent.mouseX > x - w / 2) && (parent.mouseX < x + w / 2) && (parent.mouseY > y - h / 2) && (parent.mouseY < y + h / 2);
     }
 }
