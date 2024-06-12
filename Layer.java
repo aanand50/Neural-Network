@@ -108,10 +108,8 @@ public class Layer {
         y = y + 40;
         for (int node = 0; node < nodes.length; node++) {
             nodes[node].visualization(x - 15, y + 50 * node);
-            // System.out.println("Bias: " + nodes[node].bias + " RGB: " + (int)(Math.abs(nodes[node].bias * 1000) % 255));
             for (int weight = 0; weight < nodes[node].weights.length; weight++) {
                 int rgb = (int) ((nodes[node].weights[weight] / 5) * 255);
-                System.out.println("RGB: " + rgb);
                 if (rgb > 0) {
                     parent.stroke(rgb * 3, rgb * 2, rgb);
                 }

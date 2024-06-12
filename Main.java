@@ -40,8 +40,8 @@ public class Main extends PApplet {
 
         textSize(50);
         text("Total Iterations: " + numTotal, width / 2 + 500, height / 2 - 200);
-        text("Overall percentage: " + percentage(numRight, numTotal) + "%", width / 2 + 500, height / 2 - 100);
-        text("Running percentage: " + percentage(tempRight, tempTotal) + "%", width / 2 + 500, height / 2);
+        text("Overall Accuracy: " + percentage(numRight, numTotal) + "%", width / 2 + 500, height / 2 - 100);
+        text("Running Accuracy: " + percentage(tempRight, tempTotal) + "%", width / 2 + 500, height / 2);
         textSize(30);
         text("NN Guess: " + nnOutput, 900, 575);
         textSize(15);
