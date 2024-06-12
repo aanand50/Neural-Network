@@ -20,8 +20,8 @@ public class Main extends PApplet {
     }
 
     public void settings() {
-        // fullScreen();
-        size(1920,1080);
+        fullScreen();
+        // size(1920,1080);
     }
 
     public void draw() {
@@ -31,10 +31,10 @@ public class Main extends PApplet {
         rectMode(CORNER);
         stroke(255);
         fill(19, 131, 137);
-        rect(0, 0, 205, 215);
+        rect(0, 0, 205, 230);
         fill(0);
         textSize(24);
-        text("NN Interface", 100, 50);
+        text("NN Interface", 100, 40);
         finishTrainingButton.display();
         randomButton.display();
         refreshButton.display();
@@ -58,10 +58,10 @@ public class Main extends PApplet {
     }
 
     public void setup() {
-        nn = new NeuralNetwork(new int[] { 28 * 28, 15, 13, 10 }, Function.SIGMOID, this);
-        finishTrainingButton = new Button("Finish", 100, 100, 120, 30, this);
-        randomButton = new Button("Random Digit", 100, 150, 120, 30, this);
-        refreshButton = new Button("Refresh Prediction", 100, 200, 120, 30, this);
+        nn = new NeuralNetwork(new int[] { 28 * 28, 13, 11, 10 }, Function.SIGMOID, this);
+        finishTrainingButton = new Button("Finish", 100, 90, 120, 30, this);
+        randomButton = new Button("Random Digit", 100, 140, 120, 30, this);
+        refreshButton = new Button("Refresh Prediction", 100, 190, 120, 30, this);
         System.out.println(nn.toString());
         thread("train");
     }
