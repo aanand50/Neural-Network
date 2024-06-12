@@ -22,11 +22,11 @@ public class Button {
         parent.fill(0);
         parent.textAlign(PApplet.CENTER, PApplet.CENTER);
         parent.textSize(15);
-        parent.text(label, x, y - h / 2 + 15);
+        parent.text(label, x, y);
     }
 
     public void hover() {
-        if (parent.mouseX > x && parent.mouseX < x + w && parent.mouseY > y && parent.mouseY < y + h) {
+        if ((parent.mouseX > x - w / 2) && (parent.mouseX < x + w / 2) && (parent.mouseY > y - h / 2) && (parent.mouseY < y + h / 2)) {
             parent.fill(180);
         }
         else {
