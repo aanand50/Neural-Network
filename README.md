@@ -26,3 +26,10 @@ No libraries are needed
 ### UML Diagram:
 
 ![image](UML.png)
+
+### Log
+Aditya coded the basic user interface to display our intended functionalities and outputs. He also researched and wrote the slideshow presentation and updated the Document Design Paper. Finally, he added the MNIST dataset used to test the programs.
+Jason expanded the user interface to make the program display more details, such as the hidden layers and their connections. He added color coordination and arranged the on-screen elements to look visually appealing. Also worked on the UML diagram.
+Flint added the main java code in relation to the Neural Network, such as the forward feeding and the backpropagation. Along with the processes that make the neural network run, he added the draw and update features. 
+All three group members worked together in class, often utilizing a Driver-Navigator model when writing the code.
+
