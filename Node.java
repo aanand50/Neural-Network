@@ -31,7 +31,6 @@ public class Node {
         parent.rectMode(PApplet.CORNER);
         parent.rect(x, y, 30, 30, 10);
         int rgb = (int) (bias / 4 * 255);
-        System.out.println("Bias: " + bias + " RGB: " + rgb);
         if (rgb > 0) {
             if (rgb > 0) {
                 parent.fill(rgb * 3, rgb * 2, rgb);
